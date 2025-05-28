@@ -11,10 +11,10 @@
 //  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
 
 //  ----- Dados do Aluno -----
-//  Nome:Maria Eduarda Souza Leite dos Santos
-//  email:dudaleitte010805@gmail.com
-//  Matrícula:20242160029
-//  Semestre:2025.1
+//  Nome: Sophia Garcia
+//  email:sophiagarccia2@gmail.com
+//  Matrícula: 20242160002
+//  Semestre:2
 
 //  Copyright © 2016 Renato Novais. All rights reserved.
 // Última atualização: 07/05/2021 - 19/08/2016
