@@ -22,7 +22,7 @@
 // #################################################
 
 #include <stdio.h>
-#include "SophiaGuimaraes-20242160002.h" // 
+#include "SophiaGuimaraes20242160002.h" 
 #include <stdlib.h>
 
 DataQuebrada quebraData(char data[]);
