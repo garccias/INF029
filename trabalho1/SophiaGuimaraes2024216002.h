@@ -20,8 +20,8 @@
 // Última atualização: 07/05/2021
 
 // #################################################
-#ifndef SophiaGuimaraes-20242160002.h
-#define SophiaGuimaraes-20242160002.h
+#ifndef SOPHIAGUIMARAES20242160002_H
+#define SOPHIAGUIMARAES20242160002_H
 
 typedef struct DQ
 {
