@@ -28,7 +28,7 @@
 DataQuebrada quebraData(char data[]){
     
     DataQuebrada dq;
-    char qDia[3] = {0}, qMes[3] = {0}, qAno[5] = {0};
+    char iDia[3] = {0}, iMes[3] = {0}, iAno[5] = {0};
     int i = 0, j = 0, k = 0;
     int barra = 0;
     
@@ -36,7 +36,7 @@ DataQuebrada quebraData(char data[]){
         if(data[i] == '/'){
             barra++;
         }
-    }    
+    }   
         
     if(barra != 2){
         
@@ -46,10 +46,10 @@ DataQuebrada quebraData(char data[]){
     
     // Pegar o dia
     for(i = 0; data[i] != '/' && i < 2; i++){ // é 2 e nao 3, pq comeca no indice 0
-        qDia[i] = data[i];
+        iDia[i] = data[i];
     }
     // Finalizar o dia
-    qDia[i] = '\0';
+    iDia[i] = '\0';
     
     // Verificacao se passou mais do que o ideal
     if(i != 1 && i != 2){
@@ -62,13 +62,13 @@ DataQuebrada quebraData(char data[]){
     
     // Pegar o mes
     for(i = 0; data[j] != '/' && i < 2; i++, j++){
-        qMes[i] = data[j];
+        iMes[i] = data[j];
     }
     
-    qMes[i] = '\0';
+    iMes[i] = '\0';
     
     if(i != 1 && i != 2){
-        separar.valido = 0;
+        dq.valido = 0;
         return dq;
     }
     k = j + 1;
@@ -76,9 +76,9 @@ DataQuebrada quebraData(char data[]){
     // Pegar o ano;
     
     for(i = 0; data[k] != '/' && i < 4; i++, k++){
-        qAno[i] = data[k];
+        iAno[i] = data[k];
     }
-    qAno[i] = '\0';
+    iAno[i] = '\0';
     
     if(i != 2 && i != 4){
         dq.valido = 0;
@@ -88,9 +88,9 @@ DataQuebrada quebraData(char data[]){
     
     // Transformar em inteiro 
     
-    dq.dia = atoi(qDia);
-    dq.mes = atoi(qMes);
-    dq.ano = atoi(qAno);
+    dq.dia = atoi(iDia);
+    dq.mes = atoi(iMes);
+    dq.ano = atoi(iAno);
     
     if(dq.dia <= 0 || dq.mes <= 0 || dq.ano <= 0){
         dq.valido = 0;
@@ -249,9 +249,9 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
     int diasNoMesAnterior;
 
     
-    dma.qtdDia = 0;
-    dma.qtdMes = 0;
-    dma.qtdAno = 0;
+    dma.qtdDias = 0;
+    dma.qtdMeses = 0;
+    dma.qtdAnos = 0;
     
     if(q1(datainicial) == 0){
         dma.retorno = 2;
@@ -289,12 +289,12 @@ int mes2 = final.mes;
 int ano1 = inicio.ano;
 int ano2 = final.ano;
 
-dma.qtdAno = ano2 - ano1;
-dma.qtdMes = mes2 - mes1;
-dma.qtdDia = dia2 - dia1;
+dma.qtdAnos = ano2 - ano1;
+dma.qtdMeses = mes2 - mes1;
+dma.qtdDias = dia2 - dia1;
 
-if(dma.qtdDia < 0){
-    dma.qtdMes--;
+if(dma.qtdDias < 0){
+    dma.qtdMeses--;
      m = mes2 - 1;
      a = ano2;
 }
