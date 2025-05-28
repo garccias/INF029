@@ -1,47 +1,30 @@
+// #################################################
+//  Instituto Federal da Bahia
+//  Salvador - BA
+//  Curso de Análise e Desenvolvimento de Sistemas http://ads.ifba.edu.br
+//  Disciplina: INF029 - Laboratório de Programação
+//  Professor: Renato Novais - renato@ifba.edu.br
+
+//  ----- Orientações gerais -----
+//  Descrição: esse arquivo deve conter as questões do trabalho do aluno.
+//  Cada aluno deve renomear esse arquivo para Aluno<MATRICULA>.c
+//  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
+
+//  ----- Dados do Aluno -----
+//  Nome:Maria Eduarda Souza Leite dos Santos
+//  email:dudaleitte010805@gmail.com
+//  Matrícula:20242160029
+//  Semestre:2025.1
+
+//  Copyright © 2016 Renato Novais. All rights reserved.
+// Última atualização: 07/05/2021 - 19/08/2016
+
+// #################################################
+
 #include <stdio.h>
-#include <stdlib.h> // Para atoi
-#include <string.h> // Para strlen (permitido em q4, usado em q6, q7) e para strcpy (se usado)
-#include <ctype.h>  // Para tolower em q3 e normalizeChar
-
-#include "SophiaGuimaraes20242160002.h" // Seu arquivo header
-
-static char normalizeChar(char c) {
-    // Converter para minúsculo (simples ASCII)
-    if (c >= 'A' && c <= 'Z') {
-        c = c + ('a' - 'A');
-    }
-
-    // Remover acentos (minúsculas e maiúsculas)
-    switch (c) {
-        case 'á': case 'à': case 'â': case 'ã': case 'ä':
-        case 'Á': case 'À': case 'Â': case 'Ã': case 'Ä':
-            return 'a';
-
-        case 'é': case 'è': case 'ê': case 'ë':
-        case 'É': case 'È': case 'Ê': case 'Ë':
-            return 'e';
-
-        case 'í': case 'ì': case 'î': case 'ï':
-        case 'Í': case 'Ì': case 'Î': case 'Ï':
-            return 'i';
-
-        case 'ó': case 'ò': case 'ô': case 'õ': case 'ö':
-        case 'Ó': case 'Ò': case 'Ô': case 'Õ': case 'Ö':
-            return 'o';
-
-        case 'ú': case 'ù': case 'û': case 'ü':
-        case 'Ú': case 'Ù': case 'Û': case 'Ü':
-            return 'u';
-
-        case 'ç': case 'Ç':
-            return 'c';
-
-        default:
-            return c;
-    }
-}
-
-
+#include "trabalho1.h" 
+#include <stdlib.h>
+#include <string.h>
 
 DataQuebrada quebraData(char data[]) {
     DataQuebrada dq;
@@ -85,9 +68,9 @@ DataQuebrada quebraData(char data[]) {
     return dq;
 }
 
-
 /*
 ## função utilizada para testes  ##
+
  somar = somar dois valores
 @objetivo
     Somar dois valores x e y e retonar o resultado da soma
@@ -105,6 +88,7 @@ int somar(int x, int y)
 
 /*
 ## função utilizada para testes  ##
+
  fatorial = fatorial de um número
 @objetivo
     calcular o fatorial de um número
@@ -147,8 +131,9 @@ int teste(int a)
     Não utilizar funções próprias de string (ex: strtok)   
     pode utilizar strlen para pegar o tamanho da string
  */
-int q1(char data[]) {
-     DataQuebrada dq = quebraData(data);
+int q1(char data[])
+{
+    DataQuebrada dq = quebraData(data);
 
     if (dq.valido == 0)
         return 0;
@@ -198,7 +183,6 @@ int q1(char data[]) {
 }
 
 
-
 /*
  Q2 = diferença entre duas datas
  @objetivo
@@ -213,80 +197,86 @@ int q1(char data[]) {
     4 -> datainicial > datafinal
     Caso o cálculo esteja correto, os atributos qtdDias, qtdMeses e qtdAnos devem ser preenchidos com os valores correspondentes.
  */
-DiasMesesAnos q2(char datainicial[], char datafinal[]) {
+DiasMesesAnos q2(char datainicial[], char datafinal[])
+{
     DiasMesesAnos dma;
     dma.qtdDias = 0;
     dma.qtdMeses = 0;
     dma.qtdAnos = 0;
-    dma.retorno = 0; // Inicializa retorno
 
-    if (q1(datainicial) == 0) {
+    if (q1(datainicial) == 0)
+    {
         dma.retorno = 2;
         return dma;
     }
-    if (q1(datafinal) == 0) {
+
+    if (q1(datafinal) == 0)
+    {
         dma.retorno = 3;
         return dma;
     }
 
-    DataQuebrada dqInicio = quebraData(datainicial);
-    DataQuebrada dqFinal = quebraData(datafinal);
+    DataQuebrada ini = quebraData(datainicial);
+    DataQuebrada fim = quebraData(datafinal);
 
-    // Assegurar que os anos estão em formato de 4 dígitos
-    // A função q1 não altera o valor em dqInicio/dqFinal, apenas usa uma cópia local.
-    // Portanto, precisamos ajustar aqui para os cálculos.
-    if (dqInicio.iAno >= 0 && dqInicio.iAno <= 99) {
-        dqInicio.iAno += (dqInicio.iAno <= 49) ? 2000 : 1900;
-    }
-    if (dqFinal.iAno >= 0 && dqFinal.iAno <= 99) {
-        dqFinal.iAno += (dqFinal.iAno <= 49) ? 2000 : 1900;
-    }
-    
-    // Verificar se data inicial é maior que data final
-    if (dqInicio.iAno > dqFinal.iAno ||
-        (dqInicio.iAno == dqFinal.iAno && dqInicio.iMes > dqFinal.iMes) ||
-        (dqInicio.iAno == dqFinal.iAno && dqInicio.iMes == dqFinal.iMes && dqInicio.iDia > dqFinal.iDia)) {
+    if (ini.iAno < 100)
+        ini.iAno += (ini.iAno <= 49) ? 2000 : 1900;
+
+    if (fim.iAno < 100)
+        fim.iAno += (fim.iAno <= 49) ? 2000 : 1900;
+
+    if (fim.iAno < ini.iAno ||
+        (fim.iAno == ini.iAno && fim.iMes < ini.iMes) ||
+        (fim.iAno == ini.iAno && fim.iMes == ini.iMes && fim.iDia < ini.iDia))
+    {
         dma.retorno = 4;
         return dma;
     }
 
-    int dia1 = dqInicio.iDia;
-    int mes1 = dqInicio.iMes;
-    int ano1 = dqInicio.iAno;
-    int dia2 = dqFinal.iDia;
-    int mes2 = dqFinal.iMes;
-    int ano2 = dqFinal.iAno;
+    int dia1 = ini.iDia;
+    int mes1 = ini.iMes;
+    int ano1 = ini.iAno;
+    int dia2 = fim.iDia;
+    int mes2 = fim.iMes;
+    int ano2 = fim.iAno;
 
     dma.qtdAnos = ano2 - ano1;
     dma.qtdMeses = mes2 - mes1;
     dma.qtdDias = dia2 - dia1;
 
-    if (dma.qtdDias < 0) {
+    if (dma.qtdDias < 0)
+    {
         dma.qtdMeses--;
-        // Determinar dias no mês anterior ao mês final (mes2)
-        int mesAnterior = mes2 - 1;
-        int anoDoMesAnterior = ano2;
-        if (mesAnterior == 0) { // Se mes2 era Janeiro, o anterior é Dezembro do ano anterior
-            mesAnterior = 12;
-            anoDoMesAnterior--;
-        }
-        
         int diasNoMesAnterior;
-        switch (mesAnterior) {
-            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-                diasNoMesAnterior = 31; break;
-            case 4: case 6: case 9: case 11:
-                diasNoMesAnterior = 30; break;
-            case 2:
-                diasNoMesAnterior = ((anoDoMesAnterior % 4 == 0 && anoDoMesAnterior % 100 != 0) || (anoDoMesAnterior % 400 == 0)) ? 29 : 28;
-                break;
-            default: // Não deve acontecer se as datas são válidas
-                diasNoMesAnterior = 30; 
+        int m = mes2 - 1;
+        int a = ano2;
+
+        if (m == 0)
+        {
+            m = 12;
+            a--;
         }
+
+        switch (m)
+        {
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            diasNoMesAnterior = 31;
+            break;
+        case 4: case 6: case 9: case 11:
+            diasNoMesAnterior = 30;
+            break;
+        case 2:
+            diasNoMesAnterior = ((a % 4 == 0 && a % 100 != 0) || (a % 400 == 0)) ? 29 : 28;
+            break;
+        default:
+            diasNoMesAnterior = 30;
+        }
+
         dma.qtdDias += diasNoMesAnterior;
     }
 
-    if (dma.qtdMeses < 0) {
+    if (dma.qtdMeses < 0)
+    {
         dma.qtdAnos--;
         dma.qtdMeses += 12;
     }
@@ -294,7 +284,6 @@ DiasMesesAnos q2(char datainicial[], char datafinal[]) {
     dma.retorno = 1;
     return dma;
 }
-
 
 /*
  Q3 = encontrar caracter em texto
@@ -306,27 +295,31 @@ DiasMesesAnos q2(char datainicial[], char datafinal[]) {
  @saida
     Um número n >= 0.
  */
-int q3(char *texto, char c, int isCaseSensitive) {
-    int contador = 0;
-    char charTexto;
-    char charBusca = c;
-
-    if (texto == NULL) return 0;
-
-    if (!isCaseSensitive) {
-        charBusca = tolower(c);
+int q3(char *texto, char c, int isCaseSensitive)
+{
+    int qtdOcorrencias = 0;
+	
+    if (isCaseSensitive != 1) {
+        if (c >= 'A' && c <= 'Z') {
+            c = c + 32; 
+        }
     }
 
     for (int i = 0; texto[i] != '\0'; i++) {
-        charTexto = texto[i];
-        if (!isCaseSensitive) {
-            charTexto = tolower(texto[i]);
+        char atual = texto[i];
+
+        if (isCaseSensitive != 1) {
+            if (atual >= 'A' && atual <= 'Z') {
+                atual = atual + 32;
+            }
         }
-        if (charTexto == charBusca) {
-            contador++;
+
+        if (atual == c) {
+            qtdOcorrencias++;
         }
     }
-    return contador;
+
+    return qtdOcorrencias;
 }
 
 
@@ -343,57 +336,79 @@ int q3(char *texto, char c, int isCaseSensitive) {
         posicoes[1] = 16;
         Observe que o índice da posição no texto deve começar ser contado a partir de 1.
         O retorno da função, n, nesse caso seria 1;
+
  */
-int q4(char *strTexto, char *strBusca, int posicoes[30]) {
-    int qtdOcorrencias = 0;
-    int idxPosicoes = 0; // Índice para o array posicoes
+ void noSpecials(char *text){
+  int i, j=0;
 
-    if (!strTexto || !strBusca) return 0;
+  const char *comAcentos[] = {"Ä", "Å", "Á", "Â", "À", "Ã", "ä", "á", "â", "à", "ã",
+                                "É", "Ê", "Ë", "È", "é", "ê", "ë", "è",
+                                "Í", "Î", "Ï", "Ì", "í", "î", "ï", "ì",
+                                "Ö", "Ó", "Ô", "Ò", "Õ", "ö", "ó", "ô", "ò", "õ",
+                                "Ü", "Ú", "Û", "ü", "ú", "û", "ù",
+                                "Ç", "ç"};
+                                
+  const char *semAcentos[] = {"A", "A", "A", "A", "A", "A", "a", "a", "a", "a", "a",
+                              "E", "E", "E", "E", "e", "e", "e", "e",
+                              "I", "I", "I", "I", "i", "i", "i", "i",
+                              "O", "O", "O", "O", "O", "o", "o", "o", "o", "o",
+                              "U", "U", "U", "u", "u", "u", "u",
+                              "C", "c"};
 
-    // Calcular tamanhos manualmente para seguir estritamente a restrição,
-    // embora strlen seja permitido nesta questão.
-    int lenBusca = 0;
-    char *temp = strBusca;
-    while (*temp != '\0') {
-        lenBusca++;
-        temp++;
+  char buffer[256];
+  buffer[0] = '\0';
+
+  for (int i = 0; i < strlen(text);) {
+    int found = 0;
+    for (int j = 0; j < sizeof(comAcentos) / sizeof(comAcentos[0]); j++) {
+      int len = strlen(comAcentos[j]);
+
+      if (strncmp(&text[i], comAcentos[j], len) == 0) {
+        strcat(buffer, semAcentos[j]);
+        i += len;
+        found = 1;
+        break;
+      }
     }
-
-    int lenTexto = 0;
-    temp = strTexto;
-    while (*temp != '\0') {
-        lenTexto++;
-        temp++;
+    if (!found) {
+      strncat(buffer, &text[i], 1);
+      i++;
     }
-    
-    if (lenBusca == 0) return 0; // Não é possível encontrar uma string vazia
-
-    for (int i = 0; i <= lenTexto - lenBusca; ) {
-        int achou = 1;
-        for (int j = 0; j < lenBusca; j++) {
-            // Usar normalizeChar para comparação case-insensitive e ignorando acentos
-            if (normalizeChar(strTexto[i + j]) != normalizeChar(strBusca[j])) {
-                achou = 0;
-                break;
-            }
-        }
-
-        if (achou) {
-            if (idxPosicoes + 1 < 30) { // Garante espaço para par (início, fim)
-                posicoes[idxPosicoes++] = i + 1;      // Posição inicial (base 1)
-                posicoes[idxPosicoes++] = i + lenBusca; // Posição final (base 1)
-                qtdOcorrencias++;
-                i += lenBusca; // Pula a palavra encontrada para não haver sobreposição
-            } else {
-                break; // Array posicoes está cheio
-            }
-        } else {
-            i++;
-        }
-    }
-    return qtdOcorrencias;
+  }
+  strcpy(text, buffer);
 }
 
+int q4(char *strTexto, char *strBusca, int posicoes[30]){
+    int qtdOcorrencias = 0;
+    int posicao = 0;
+    int len = strlen(strBusca);
+    noSpecials(strTexto);
+    noSpecials(strBusca);
+
+    for(int i = 0; i<strlen(strTexto);){
+      int achou = 0;
+      if(strTexto[i]==strBusca[0]){
+        achou=1;
+        for(int j=i, k=0; k<len; j++,k++){
+          if(strBusca[k]!=strTexto[j])achou=0;
+        }
+        if(achou){
+          qtdOcorrencias++;
+          posicoes[posicao] = i+1;
+          posicao++;
+          posicoes[posicao] = i+len;
+          posicao++;
+
+          i += len;
+        }else{
+          i++;
+        }
+      }
+      if(!achou)i++;
+    }
+
+    return qtdOcorrencias;
+}
 
 /*
  Q5 = inverte número
@@ -404,44 +419,17 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]) {
  @saida
     Número invertido
  */
+
 int q5(int num) {
     int invertido = 0;
-    int ehNegativo = 0;
-
-    if (num == 0) return 0;
-
-    if (num < 0) {
-        ehNegativo = 1;
-        // Cuidado com INT_MIN, -INT_MIN pode estourar.
-        // Para este problema, vamos assumir que não ocorrerá ou que o comportamento padrão é aceitável.
-        if (num == -2147483648) { // Caso especial para o menor int
-             // Não é possível inverter diretamente -2147483648 para 2147483648 e depois processar,
-             // pois 2147483648 pode ser maior que INT_MAX.
-             // No entanto, o processo de inversão dígito a dígito pode funcionar.
-             // Ex: -123 -> invertido = 321 -> retorna -321
-             // Ex: -2147483648, o invertido seria -8463847412, que estoura int.
-             // O problema não especifica o comportamento para estouro.
-             // Vamos seguir a lógica original que pode resultar em estouro para números muito grandes.
-        }
-        num = -num; 
-    }
 
     while (num > 0) {
-        int digito = num % 10;
-        // Checagem de estouro antes da multiplicação
-        if (invertido > (2147483647 - digito) / 10) {
-            // Estouro! O problema não diz como tratar. Retornar 0 ou o valor até o estouro?
-            // Por simplicidade, a lógica original não trata isso explicitamente.
-            // Se o número invertido estourar, o comportamento é indefinido pela linguagem C
-            // ou resultará em um valor "enrolado".
-        }
-        invertido = invertido * 10 + digito;
+        invertido = invertido * 10 + (num % 10);
         num /= 10;
     }
 
-    return ehNegativo ? -invertido : invertido;
+    return invertido;
 }
-
 
 /*
  Q6 = ocorrência de um número em outro
@@ -452,44 +440,31 @@ int q5(int num) {
  @saida
     Quantidade de vezes que número de busca ocorre em número base
  */
-int q6(int numerobase, int numerobusca) {
-    // Nota: Esta solução usa sprintf e strlen. Se "funções próprias de string"
-    // for uma restrição estrita que proíbe estas, a lógica precisaria ser
-    // puramente matemática, o que é consideravelmente mais complexo.
-    char baseStr[50];
-    char buscaStr[50];
 
-    // Lidar com número de busca sendo 0.
-    // Se numerobusca é 0:
-    //   Se numerobase também é 0, 0 ocorre em 0 uma vez ("0" em "0").
-    //   Se numerobase é 10203, 0 ocorre 2 vezes.
-    // A conversão para string lida bem com isso. "0" em "1020".
-    
+int q6(int numerobase, int numerobusca) {
+    int qtdOcorrencias = 0;
+    char baseStr[50], buscaStr[50];
+
     sprintf(baseStr, "%d", numerobase);
     sprintf(buscaStr, "%d", numerobusca);
 
-    int lenBase = strlen(baseStr);
-    int lenBusca = strlen(buscaStr);
-    int ocorrencias = 0;
+    int tamBusca = strlen(buscaStr);
+    int tamBase = strlen(baseStr);
 
-    if (lenBusca == 0) return 0; // Busca vazia não ocorre
-    if (lenBusca > lenBase) return 0; // Busca maior que base
-
-    for (int i = 0; i <= lenBase - lenBusca; i++) {
+    for (int i = 0; i <= tamBase - tamBusca; i++) {
         int encontrou = 1;
-        for (int j = 0; j < lenBusca; j++) {
+        for (int j = 0; j < tamBusca; j++) {
             if (baseStr[i + j] != buscaStr[j]) {
                 encontrou = 0;
                 break;
             }
         }
-        if (encontrou) {
-            ocorrencias++;
-        }
+        if (encontrou)
+            qtdOcorrencias++;
     }
-    return ocorrencias;
-}
 
+    return qtdOcorrencias;
+}
 /*
  Q7 = jogo busca palavras
  @objetivo
@@ -499,53 +474,35 @@ int q6(int numerobase, int numerobusca) {
  @saida
     1 se achou 0 se não achou
  */
+
 int q7(char matriz[8][10], char palavra[5]) {
     int linhas = 8, colunas = 10;
     int tamPalavra = strlen(palavra);
-
-    if (tamPalavra == 0) return 0; // Palavra vazia não pode ser encontrada (ou 1 se interpretação diferente)
-
-    // Direções: {dx, dy}
-    // Horizontal ->, Horizontal <-
-    // Vertical V, Vertical ^
-    // Diagonal VD->, Diagonal VE->
-    // Diagonal VD^, Diagonal VE^
-    int direcoes[8][2] = {
-        {0, 1},  // Direita
-        {0, -1}, // Esquerda
-        {1, 0},  // Baixo
-        {-1, 0}, // Cima
-        {1, 1},  // Diagonal Inferior Direita
-        {1, -1}, // Diagonal Inferior Esquerda
-        {-1, 1}, // Diagonal Superior Direita
-        {-1, -1} // Diagonal Superior Esquerda
-    };
-
+    
+    int direcoes[8][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}, {0, -1}, {-1, 0}, {-1, -1}, {-1, 1}};
+    
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
-            for (int d = 0; d < 8; d++) { // Para cada uma das 8 direções
-                int atualLin = i;
-                int atualCol = j;
-                int k; // Índice para a palavra
-
+            for (int d = 0; d < 8; d++) {
+                int dirX = direcoes[d][0], dirY = direcoes[d][1];
+                int k, x = i, y = j;
+                int encontrado = 1;
+                
                 for (k = 0; k < tamPalavra; k++) {
-                    if (atualLin < 0 || atualLin >= linhas || atualCol < 0 || atualCol >= colunas ||
-                        matriz[atualLin][atualCol] != palavra[k]) {
-                        break; // Fora dos limites ou caractere não coincide
+                    if (x < 0 || x >= linhas || y < 0 || y >= colunas || matriz[x][y] != palavra[k]) {
+                        encontrado = 0;
+                        break;
                     }
-                    // Move para o próximo caractere na direção atual
-                    if (k < tamPalavra -1) { // Só avança se não for o último char da palavra
-                        atualLin += direcoes[d][0];
-                        atualCol += direcoes[d][1];
-                    }
+                    x += dirX;
+                    y += dirY;
                 }
-
-                if (k == tamPalavra) { // Todos os caracteres da palavra coincidiram
-                    return 1; // Achou
+                
+                if (encontrado) {
+                    return 1;  
                 }
             }
         }
     }
-    return 0; // Não achou
+    
+    return 0;
 }
-
