@@ -303,6 +303,32 @@ int q3(char texto[], char c, int isCaseSensitive) {
 
  */
 
+int q4(char *strTexto, char *strBusca, int posicoes[30]) {
+    int qtdOcorrencias = 0;
+    int tamTexto = strlen(strTexto);
+    int tamBusca = strlen(strBusca);
+    int i, j, k;
+
+    for (i = 0; i <= tamTexto - tamBusca; i++) {
+        int encontrou = 1;
+        
+        for (j = 0; j < tamBusca; j++) {
+            if (strTexto[i + j] != strBusca[j]) {
+                encontrou = 0;
+                break;
+            }
+        }
+
+        if (encontrou) {
+            posicoes[qtdOcorrencias * 2] = i + 1;                 // posição inicial (começa em 1)
+            posicoes[qtdOcorrencias * 2 + 1] = i + tamBusca;      // posição final
+            qtdOcorrencias++;
+        }
+    }
+
+    return qtdOcorrencias;
+}
+
 
 /*
  Q5 = inverte número
