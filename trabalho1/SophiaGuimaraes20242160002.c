@@ -243,7 +243,7 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
 
 	int diasPorMes[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	int diasParaSomar = diasPorMes[mesAnterior];
-	if (mesAnterior == 2 && ((anoDoMesAnterior % 4 == 0 && anoDoMesAnterior % 100 != 0) || (anoDoMesAnterior % 400 == 0)){
+	if (mesAnterior == 2 && ((anoDoMesAnterior % 4 == 0 && anoDoMesAnterior % 100 != 0) || (anoDoMesAnterior % 400 == 0))){
             diasParaSomar = 29;
 	}
 
