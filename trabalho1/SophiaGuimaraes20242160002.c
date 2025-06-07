@@ -270,6 +270,25 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
     Um número n >= 0.
  */
 
+int q3(char texto[], char c, int isCaseSensitive) {
+	int contador = 0;
+	for(int i = 0; texto[i] != '\0'; i++){
+		 if (isCaseSensitive == 1) {
+            		if (texto[i] == c) {
+                		contador++;
+            		}
+		 }else{
+ 			if(tolower(texto[i] == tolower(c)){
+				contador++;
+			}
+		 }
+	}
+	return contador;
+}
+
+
+
+
 
 /*
  Q4 = encontrar palavra em texto
