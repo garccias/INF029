@@ -22,9 +22,10 @@
 // #################################################
 
 #include <stdio.h>
-#include "trabalho1.h" 
+#include "SophiaGuimaraes20242160002.h" 
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 DataQuebrada quebraData(char data[]) {
     DataQuebrada dq;
@@ -278,17 +279,13 @@ int q3(char texto[], char c, int isCaseSensitive) {
                 		contador++;
             		}
 		 }else{
- 			if(tolower(texto[i] == tolower(c)){
+ 			if(tolower(texto[i]) == tolower(c)){
 				contador++;
 			}
 		 }
 	}
 	return contador;
 }
-
-
-
-
 
 /*
  Q4 = encontrar palavra em texto
@@ -305,6 +302,7 @@ int q3(char texto[], char c, int isCaseSensitive) {
         O retorno da função, n, nesse caso seria 1;
 
  */
+
 
 /*
  Q5 = inverte número
