@@ -340,6 +340,19 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]) {
     Número invertido
  */
 
+int q5(int num) {
+    int negativo = num < 0;
+    if (negativo) num = -num;
+
+    int invertido = 0;
+    while (num != 0) {
+        int digito = num % 10;
+        invertido = invertido * 10 + digito;
+        num /= 10;
+    }
+
+    return negativo ? -invertido : invertido;
+}
 
 
 /*
@@ -352,6 +365,34 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]) {
     Quantidade de vezes que número de busca ocorre em número base
  */
 
+int q6(int numerobase, int numerobusca) {
+    // Converte os números em strings
+    char strBase[50], strBusca[50];
+    sprintf(strBase, "%d", numerobase);
+    sprintf(strBusca, "%d", numerobusca);
+
+    int ocorrencias = 0;
+    int tamBase = strlen(strBase);
+    int tamBusca = strlen(strBusca);
+
+    for (int i = 0; i <= tamBase - tamBusca; i++) {
+        int encontrou = 1;
+
+        for (int j = 0; j < tamBusca; j++) {
+            if (strBase[i + j] != strBusca[j]) {
+                encontrou = 0;
+                break;
+            }
+        }
+
+        if (encontrou) {
+            ocorrencias++;
+        }
+    }
+
+    return ocorrencias;
+}
+
 
 /*
  Q7 = jogo busca palavras
@@ -362,4 +403,48 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]) {
  @saida
     1 se achou 0 se não achou
  */
+
+int buscaPalavra(char matriz[8][10], int linhas, int colunas, char *palavra) {
+    int len = strlen(palavra);
+
+    int direcoes[8][2] = {
+        {0, 1},    // Direita
+        {0, -1},   // Esquerda
+        {1, 0},    // Baixo
+        {-1, 0},   // Cima
+        {1, 1},    // Diagonal inferior direita
+        {-1, -1},  // Diagonal superior esquerda
+        {1, -1},   // Diagonal inferior esquerda
+        {-1, 1}    // Diagonal superior direita
+    };
+
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+
+            // Para cada direção
+            for (int d = 0; d < 8; d++) {
+                int dx = direcoes[d][0];
+                int dy = direcoes[d][1];
+                int k, x = i, y = j;
+
+                for (k = 0; k < len; k++) {
+                    if (x < 0 || x >= linhas || y < 0 || y >= colunas)
+                        break;
+                    if (matriz[x][y] != palavra[k])
+                        break;
+
+                    x += dx;
+                    y += dy;
+                }
+
+                if (k == len) {
+                    return 1;  // Palavra encontrada
+                }
+            }
+        }
+    }
+
+    return 0;  // Palavra não encontrada
+}
+
 
