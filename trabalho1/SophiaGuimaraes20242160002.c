@@ -163,13 +163,11 @@ int q1(char data[])
     case 2: // logica do bissexto em fev
         if ((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0)){
             diasDoMes = 29;
-		break;
-           
         }    
         else{
             diasDoMes = 28;
-        break;
         }
+	break;    
     default:
         return 0;
     }
