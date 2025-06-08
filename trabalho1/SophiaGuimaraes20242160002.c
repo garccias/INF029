@@ -144,7 +144,7 @@ int q1(char data[])
     int ano = dq.iAno;
 
     if(ano >= 0 && ano <= 99){
-	ano+= (ano >= 49)? 2000: 1900;
+	ano+= (ano <= 49)? 2000: 1900;
    }   
 
     if (mes < 1 || mes > 12 || dia < 1)
