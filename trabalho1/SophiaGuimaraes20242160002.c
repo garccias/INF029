@@ -161,11 +161,14 @@ int q1(char data[])
         diasDoMes = 30;
         break;
     case 2: // logica do bissexto em fev
-        if ((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0))
-            diasMes = 29;
-        else
-            diasMes = 28;
+        if ((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0)){
+            diasDoMes = 29;
+           
+        }    
+        else{
+            diasDoMes = 28;
         break;
+        }
     default:
         return 0;
     }
@@ -404,7 +407,9 @@ int q6(int numerobase, int numerobusca) {
     1 se achou 0 se não achou
  */
 
-int buscaPalavra(char matriz[8][10], int linhas, int colunas, char *palavra) {
+int q7(char matriz[8][10], char palavra[5]) {
+    int linhas = 8;
+    int colunas = 10;
     int len = strlen(palavra);
 
     int direcoes[8][2] = {
@@ -421,7 +426,7 @@ int buscaPalavra(char matriz[8][10], int linhas, int colunas, char *palavra) {
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
 
-            // Para cada direção
+           
             for (int d = 0; d < 8; d++) {
                 int dx = direcoes[d][0];
                 int dy = direcoes[d][1];
@@ -438,13 +443,14 @@ int buscaPalavra(char matriz[8][10], int linhas, int colunas, char *palavra) {
                 }
 
                 if (k == len) {
-                    return 1;  // Palavra encontrada
+                    return 1;
                 }
             }
         }
     }
 
-    return 0;  // Palavra não encontrada
+    return 0; 
 }
+
 
 
