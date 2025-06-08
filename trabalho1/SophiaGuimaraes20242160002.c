@@ -304,34 +304,79 @@ int q3(char texto[], char c, int isCaseSensitive) {
         O retorno da função, n, nesse caso seria 1;
 
  */
+void removerAcentos(char *text){
+  int i, j=0;
 
-int q4(char *strTexto, char *strBusca, int posicoes[30]) {
+  const char *comAcentos[] = {"Ä", "Å", "Á", "Â", "À", "Ã", "ä", "á", "â", "à", "ã",
+                                "É", "Ê", "Ë", "È", "é", "ê", "ë", "è",
+                                "Í", "Î", "Ï", "Ì", "í", "î", "ï", "ì",
+                                "Ö", "Ó", "Ô", "Ò", "Õ", "ö", "ó", "ô", "ò", "õ",
+                                "Ü", "Ú", "Û", "ü", "ú", "û", "ù",
+                                "Ç", "ç"};
+                                
+  const char *semAcentos[] = {"A", "A", "A", "A", "A", "A", "a", "a", "a", "a", "a",
+                              "E", "E", "E", "E", "e", "e", "e", "e",
+                              "I", "I", "I", "I", "i", "i", "i", "i",
+                              "O", "O", "O", "O", "O", "o", "o", "o", "o", "o",
+                              "U", "U", "U", "u", "u", "u", "u",
+                              "C", "c"};
+
+  char buffer[256];
+  buffer[0] = '\0';
+
+  for (int i = 0; i < strlen(text);) {
+    int found = 0;
+    for (int j = 0; j < sizeof(comAcentos) / sizeof(comAcentos[0]); j++) {
+      int len = strlen(comAcentos[j]);
+
+      if (strncmp(&text[i], comAcentos[j], len) == 0) {
+        strcat(buffer, semAcentos[j]);
+        i += len;
+        found = 1;
+        break;
+      }
+    }
+    if (!found) {
+      strncat(buffer, &text[i], 1);
+      i++;
+    }
+  }
+  strcpy(text, buffer);
+}
+
+int q4(char *strTexto, char *strBusca, int posicoes[30]){
     int qtdOcorrencias = 0;
-    int tamTexto = strlen(strTexto);
-    int tamBusca = strlen(strBusca);
-    int i, j, k;
+    int posicao = 0;
+    int len = strlen(strBusca);
+    removerAcentos(strTexto);
+    removerAcentos(strBusca);
 
-    for (i = 0; i <= tamTexto - tamBusca; i++) {
-        int encontrou = 1;
-        
-        for (j = 0; j < tamBusca; j++) {
- 	if (tolower(strTexto[i + j]) != tolower(strBusca[j])) {       
-		encontrou = 0;
-                break;
-            }
+    for(int i = 0; i<strlen(strTexto);){
+      int achou = 0;
+      if(strTexto[i]==strBusca[0]){
+        achou=1;
+        for(int j=i, k=0; k<len; j++,k++){
+          if(strBusca[k]!=strTexto[j]){
+		  achou=0;
         }
+        if(achou){
+          qtdOcorrencias++;
+          posicoes[posicao] = i+1;
+          posicao++;
+          posicoes[posicao] = i+len;
+          posicao++;
 
-        if (encontrou) {
-            posicoes[qtdOcorrencias * 2] = i + 1;                
-            posicoes[qtdOcorrencias * 2 + 1] = i + tamBusca;      
-            qtdOcorrencias++;
+          i += len;
+        }else{
+          i++;
         }
+      }
+      }
+      if(!achou)i++;
     }
 
     return qtdOcorrencias;
 }
-
-
 /*
  Q5 = inverte número
  @objetivo
