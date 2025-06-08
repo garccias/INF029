@@ -304,7 +304,7 @@ int q3(char texto[], char c, int isCaseSensitive) {
         O retorno da função, n, nesse caso seria 1;
 
  */
-void removerAcentos(char *text){
+void removerAcento(char *text){
   int i, j=0;
 
   const char *comAcentos[] = {"Ä", "Å", "Á", "Â", "À", "Ã", "ä", "á", "â", "à", "ã",
@@ -348,16 +348,15 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
     int qtdOcorrencias = 0;
     int posicao = 0;
     int len = strlen(strBusca);
-    removerAcentos(strTexto);
-    removerAcentos(strBusca);
+    removerAcento(strTexto);
+    removerAcento(strBusca);
 
     for(int i = 0; i<strlen(strTexto);){
       int achou = 0;
       if(strTexto[i]==strBusca[0]){
         achou=1;
         for(int j=i, k=0; k<len; j++,k++){
-          if(strBusca[k]!=strTexto[j]){
-		  achou=0;
+          if(strBusca[k]!=strTexto[j])achou=0;
         }
         if(achou){
           qtdOcorrencias++;
@@ -370,7 +369,6 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
         }else{
           i++;
         }
-      }
       }
       if(!achou)i++;
     }
