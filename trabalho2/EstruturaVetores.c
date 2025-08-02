@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define TAM 10
+
 
 #include "EstruturaVetores.h"
 
@@ -18,6 +20,33 @@ EstruturaAuxiliar* vetorPrincipal[TAM];
 int comparar_inteiros_crescente(const void *a, const void *b) {
     return (*(int*)a - *(int*)b);
 }
+
+
+/*
+Objetivo: inicializa o programa. deve ser chamado ao inicio do programa
+*/
+void inicializar() {
+    int i;
+    for (i = 0; i < TAM; i++) {
+        vetorPrincipal[i] = NULL;
+    }
+}
+
+/*
+Objetivo: finaliza o programa. deve ser chamado ao final do programa
+para poder liberar todos os espaços de memória das estruturas auxiliares.
+*/
+void finalizar() {
+    int i;
+    for (i = 0; i < TAM; i++) {
+        if (vetorPrincipal[i] != NULL) {
+            free(vetorPrincipal[i]->numeros);
+            free(vetorPrincipal[i]);
+            vetorPrincipal[i] = NULL;
+        }
+    }
+}
+
 
 /*
 Objetivo: criar estrutura auxiliar na posição 'posicao'.
@@ -64,6 +93,8 @@ int criarEstruturaAuxiliar(int posicao, int tamanho)
         return SEM_ESPACO_DE_MEMORIA;
     }
 
+    vetorPrincipal[indice]->quantidade_atual = 0;
+    vetorPrincipal[indice]->capacidade = tamanho;
 
     return SUCESSO;
 }
@@ -318,6 +349,19 @@ int getDadosDeTodasEstruturasAuxiliares(int vetorAux[])
     }
 }
 
+static int getQtdNumerosTotais(EstruturaAuxiliar* vetorPrincipal[]){
+    int i, total = 0;
+    for (i = 0; i < TAM; i++) {
+        if (vetorPrincipal[i] != NULL) {
+            total += vetorPrincipal[i]->quantidade_atual;
+        }
+    }
+    return total;
+}
+
+/*
+Objetivo: retorna os números ordenados de todas as estruturas auxiliares.
+*/
 
 /*
 Objetivo: retorna os números ordenados de todas as estruturas auxiliares.
@@ -531,34 +575,4 @@ void destruirListaEncadeadaComCabecote(No **inicio_ref) {
 
     *inicio_ref = NULL;
     
-}
-
-
-/*
-Objetivo: inicializa o programa. deve ser chamado ao inicio do programa 
-
-*/
-
-void inicializar() {
-
-    for (int i = 0; i < TAM; i++) {
-        vetorPrincipal[i] = NULL; 
-    }
-}
-
-
-/*
-Objetivo: finaliza o programa. deve ser chamado ao final do programa 
-para poder liberar todos os espaços de memória das estruturas auxiliares.
-
-*/
-
-void finalizar() {
-
-      for (int i = 0; i < TAM; i++) {
-        if (vetorPrincipal[i] != NULL) {
-            free(vetorPrincipal[i]->numeros); // Libera o array de números
-            free(vetorPrincipal[i]);          // Libera a struct gerente
-        }
-    }
 }

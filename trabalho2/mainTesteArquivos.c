@@ -107,7 +107,6 @@ void testeExcluirNumeroEspecifico()
 void testeListar()
 {
     show_log("testeListar()");
-    //###  int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]); ###
     printf("%d\n", inserirNumeroEmEstrutura(2, 7) == SUCESSO);
     printf("%d\n", inserirNumeroEmEstrutura(2, -9) == SUCESSO);
 
